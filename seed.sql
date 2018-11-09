@@ -1,4 +1,18 @@
-TRUNCATE TABLE users, posts;
+DROP TABLE IF EXISTS upvotes;
+DROP TABLE IF EXISTS users, posts;
+
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  name TEXT DEFAULT NULL
+);
+
+CREATE TABLE posts (
+  id SERIAL PRIMARY KEY,
+  userId INTEGER REFERENCES users(id) NOT NULL,
+  title varchar(255) DEFAULT NULL,
+  content TEXT DEFAULT NULL,
+  date timestamp DEFAULT now()
+);
 
 INSERT INTO users (name) VALUES ('RubeusH');
 INSERT INTO users (name) VALUES ('Baddock');
