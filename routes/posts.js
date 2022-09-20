@@ -4,7 +4,7 @@ const router = express.Router();
 const client = require("../db");
 const postList = require("../views/postList");
 const postDetails = require("../views/postDetails");
-const addPost = require("../views/postList");
+const addPost = require("../views/addPost");
 
 const baseQuery =
   "SELECT posts.*, users.name, counting.upvotes FROM posts INNER JOIN users ON users.id = posts.userId LEFT JOIN (SELECT postId, COUNT(*) as upvotes FROM upvotes GROUP BY postId) AS counting ON posts.id = counting.postId\n";
