@@ -18,6 +18,22 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/add", (req, res) => {
+  res.send(addPost());
+});
+
+router.get("/:id", async (req, res, next) => {
+  try {
+    const data = await client.query(baseQuery + "WHERE posts.id = $1", [
+      req.params.id,
+    ]);
+    const post = data.rows[0];
+    res.send(postDetails(post));
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post("/", async (req, res) => {
   const name = req.body.name;
   const title = req.body.title;
@@ -51,22 +67,6 @@ router.post("/", async (req, res) => {
     res.redirect(`/posts/${postId}`);
   } catch (error) {
     res.status(500).send(`Something went wrong: ${error}`);
-  }
-});
-
-router.get("/add", (req, res) => {
-  res.send(addPost());
-});
-
-router.get("/:id", async (req, res, next) => {
-  try {
-    const data = await client.query(baseQuery + "WHERE posts.id = $1", [
-      req.params.id,
-    ]);
-    const post = data.rows[0];
-    res.send(postDetails(post));
-  } catch (error) {
-    next(error);
   }
 });
 
