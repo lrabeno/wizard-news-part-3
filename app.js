@@ -1,15 +1,15 @@
 const express = require("express");
 const morgan = require("morgan");
-const routes = require("./routes/posts");
 const app = express();
+const routes = require("./routes/posts");
 
-app.use("/posts", routes);
 app.use(morgan("dev"));
 app.use(express.static(__dirname + "/public"));
-app.use(express.urlencoded({ extended: false }));
 
 // parses json bodies
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use("/posts", routes);
 
 app.get("/", (req, res) => {
   res.redirect("/posts");
